@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class>
+  <div id="app">
     <header class="p-3">
       <h1 class="text-center">News</h1>
     </header>
@@ -12,6 +12,11 @@
 </template>
 
 <style lang="scss">
+
+html{
+    background-color: #f3f3ed;
+  
+ }
   h1{
     font-size: 2em !important;
   }

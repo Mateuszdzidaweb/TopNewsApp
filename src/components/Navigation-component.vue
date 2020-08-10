@@ -1,5 +1,5 @@
 <template>
-  <div class="flex align-middle bg-gray-500">
+  <div class="nav flex align-middle bg-gray-500">
     <div class="flex-auto text-center p-3">
       <router-link class="p-5 text-lg" to="/" :active="isActive" exact>Home</router-link>
       <router-link class="p-5 text-lg linkActiveClass" active="isActive" to="/about">About</router-link>
@@ -15,6 +15,10 @@
     
      font-weight: bold;
 } 
+
+.nav{
+    background: linear-gradient(to bottom left, #cc0000 0%, #f3f3ed 107%);
+}
     
 </style>
 
