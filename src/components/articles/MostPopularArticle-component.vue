@@ -1,18 +1,20 @@
 <template>
   <div>
     <div class="flex flex-wrap w-5/5">
-    <h1 class="display-center px-2">Most Visited</h1>
+    <h1 class="display-center px-2">Most Popular</h1>
       <div
         class="container flex flex-row items-center ml-2 mr-2 mt-4"
         :key="article.id"
         v-for="article in articles"
       >
+      <a class="display flex" :href="article.url" target="_blank">
         <img
           class="topNewsImg flex content-center"
           :src="article.urlToImage"
-          alt = 'article.name'
+          :alt = 'articles.name'
         />
         <p class="article-title mx-2">{{ article.title| truncate(50) }}</p>
+        </a>
       </div>
     </div>
   </div>

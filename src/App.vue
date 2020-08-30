@@ -22,7 +22,7 @@ html{
   }
 </style>
 <script>
-const axios = require("axios");
+// const axios = require("axios");
 
 export default {
   data() {
@@ -33,17 +33,17 @@ export default {
   },
 
   created() {
-    axios
-      .get(
-        "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=83921d95a9924c19badb5f8a2e6ed8c1"
-      )
-      .then((response) => {
-        this.articles = response.data.articles;
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // axios
+    //   .get(
+    //     "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=83921d95a9924c19badb5f8a2e6ed8c1"
+    //   )
+    //   .then((response) => {
+    //     this.articles = response.data.articles;
+    //     console.log(response);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   },
 };
 </script>
