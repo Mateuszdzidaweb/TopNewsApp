@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 // import Axios from 'axios';
 import './assets/css/tailwind.css'
+import VueProgressiveImage from 'vue-progressive-image'
+
 
 // Global Componets
 import Navigation from './components/Navigation-component';
@@ -14,6 +16,13 @@ Vue.component('app-navigation', Navigation);
 Vue.component('app-article', Article);
 Vue.component('app-moreNews', MoreNews);
 Vue.component('app-mostPopularArticle', MostPopularArticle);
+
+Vue.use(VueProgressiveImage,{
+  blur: 100,
+  // delay: 1000,
+  // cache: false,
+  placeholder: require('@/assets/images/no-image-found.png')
+})
 
 Vue.config.productionTip = false
 // Vue.prototype.$http=Axios;

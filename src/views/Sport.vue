@@ -2,7 +2,7 @@
   <div class="sport">
     <!-- <div class="flex flex-row sm:container sm:mx-auto px-2"> -->
 
-    <div class="flex-auto text-center border-solid border-b-2 border-gray-600 border-opacity-50">
+    <div class="flex-auto text-center border-solid border-b-2 border-gray-600 border-opacity-50 SportHeader">
       <div class="flex flex-row sm:container sm:mx-auto px-2">
         <h1 class="px-4">Sport</h1>
       </div>
@@ -17,8 +17,11 @@
     <!-- </div> -->
 
     <div class="home flex flex-row justify-between xl:container xl:mx-auto mb-5 py-5">
-      <app-article :articles="articles"></app-article>
-      <app-moreNews></app-moreNews>
+      <app-article v-if="!Spinner" :articles="articles"></app-article>
+      <div class="mt-top center self-top h-10">
+        <i v-if="Spinner" class="fas fa-spinner fa-spin"></i>
+      </div>
+      <app-moreNews class="hidden md:block"></app-moreNews>
     </div>
   </div>
 </template>
@@ -42,6 +45,11 @@
   // font-weight: bold;
   color: red;
 }
+
+.SportHeader{
+    background-color: #FFD32F;
+    border-top: 1px solid white;
+}
 </style>
 
 
@@ -57,95 +65,116 @@ export default {
     return {
       articles: [],
       sport: "",
+      Spinner: false,
     };
 
     // currentDate: ''
   },
   methods: {
     fetchCurrentNews() {
-      axios
-        .get(
-          `https://newsapi.org/v2/everything?q=sport&sortBy=publishedAt&language=${newsCountry}&pageSize=20&apiKey=${apiKey}`
-        )
-        .then((response) => {
-          this.articles = response.data.articles;
-          console.log(response);
-          // alert("this is submit response");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      this.Spinner = true;
+      setTimeout(() => {
+        axios
+          .get(
+            `https://newsapi.org/v2/everything?q=sport&sortBy=publishedAt&language=${newsCountry}&pageSize=20&apiKey=${apiKey}`
+          )
+          .then((response) => {
+            this.articles = response.data.articles;
+            console.log(response);
+            this.Spinner = false;
+            // alert("this is submit response");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }, 1010);
     },
 
     fetchFoodbal() {
-      axios
-        .get(
-          `https://newsapi.org/v2/everything?q=football&sortBy=publishedAt&language=${newsCountry}&pageSize=20&apiKey=${apiKey}`
-        )
-        .then((response) => {
-          this.articles = response.data.articles;
-          console.log(response);
-          // alert("this is submit response");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      this.Spinner = true;
+      setTimeout(() => {
+        axios
+          .get(
+            `https://newsapi.org/v2/everything?q=football&sortBy=publishedAt&language=${newsCountry}&pageSize=20&apiKey=${apiKey}`
+          )
+          .then((response) => {
+            this.articles = response.data.articles;
+            console.log(response);
+            this.Spinner = false;
+            // alert("this is submit response");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }, 1010);
     },
     fetchFormula() {
-      axios
-        .get(
-          `https://newsapi.org/v2/everything?q=Formula1&sortBy=publishedAt&language=${newsCountry}&pageSize=20&apiKey=${apiKey}`
-        )
-        .then((response) => {
-          this.articles = response.data.articles;
-          console.log(response);
-          // alert("this is submit response");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      this.Spinner = true;
+      setTimeout(() => {
+        axios
+          .get(
+            `https://newsapi.org/v2/everything?q=Formula1&sortBy=publishedAt&language=${newsCountry}&pageSize=20&apiKey=${apiKey}`
+          )
+          .then((response) => {
+            this.articles = response.data.articles;
+            console.log(response);
+            this.Spinner = false;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }, 1010);
     },
     fetchRugby() {
-      axios
-        .get(
-          `https://newsapi.org/v2/everything?q=rugby&sortBy=publishedAt&language=${newsCountry}&pageSize=20&apiKey=${apiKey}`
-        )
-        .then((response) => {
-          this.articles = response.data.articles;
-          console.log(response);
-          // alert("this is submit response");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      this.Spinner = true;
+      setTimeout(() => {
+        axios
+          .get(
+            `https://newsapi.org/v2/everything?q=rugby&sortBy=publishedAt&language=${newsCountry}&pageSize=20&apiKey=${apiKey}`
+          )
+          .then((response) => {
+            this.articles = response.data.articles;
+            console.log(response);
+            this.Spinner = false;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }, 1010);
     },
     fetchGolf() {
-      axios
-        .get(
-          `https://newsapi.org/v2/everything?q=golf&sortBy=publishedAt&language=${newsCountry}&pageSize=20&apiKey=${apiKey}`
-        )
-        .then((response) => {
-          this.articles = response.data.articles;
-          console.log(response);
-          // alert("this is submit response");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      this.Spinner = true;
+      setTimeout(() => {
+        axios
+          .get(
+            `https://newsapi.org/v2/everything?q=golf&sortBy=publishedAt&language=${newsCountry}&pageSize=20&apiKey=${apiKey}`
+          )
+          .then((response) => {
+            this.articles = response.data.articles;
+            console.log(response);
+            this.Spinner = false;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }, 1010);
     },
     fetchAthletics() {
-      axios
-        .get(
-          `https://newsapi.org/v2/everything?q=athletics&sortBy=publishedAt&language=${newsCountry}&pageSize=20&apiKey=${apiKey}`
-        )
-        .then((response) => {
-          this.articles = response.data.articles;
-          console.log(response);
-          // alert("this is submit response");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      this.Spinner = true;
+      setTimeout(() => {
+        axios
+          .get(
+            `https://newsapi.org/v2/everything?q=athletics&sortBy=publishedAt&language=${newsCountry}&pageSize=20&apiKey=${apiKey}`
+          )
+          .then((response) => {
+            this.articles = response.data.articles;
+            console.log(response);
+            this.Spinner = false
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }, 1010);
     },
   },
 

@@ -8,9 +8,9 @@
         v-for="article in articles"
       >
       <a class="display flex" :href="article.url" target="_blank">
-        <img
+        <progressive-img
           class="topNewsImg flex content-center"
-          :src="article.urlToImage"
+          :src="article.urlToImage || defaultImage"
           :alt = 'articles.name'
         />
         <p class="article-title mx-2">{{ article.title| truncate(50) }}</p>
@@ -23,8 +23,8 @@
 <style lang="scss">
 
 .topNewsImg{
-    width: 150px;
-    height: auto;
+    // width: 200px;
+    // max-height: 180px;
 }
 
 .article-title {
@@ -45,6 +45,7 @@ export default {
   data() {
     return {
       articles: [],
+      defaultImage: require('@/assets/images/no-image-found.png')
     };
   },
 

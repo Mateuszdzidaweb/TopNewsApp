@@ -1,24 +1,37 @@
 <template>
   <div class="home">
-    <div class="flex flex-row lg:container lg:mx-auto py-5 px-2">
-      <h1 class>{{getCurrentDate()}}</h1>
+     <div class="flex-auto text-center border-solid border-b-2 border-gray-600 border-opacity-50 SportHeader">
+    <div class="flex flex-row lg:container lg:mx-auto py-3 px-2">
+      <h1 class="dateHeading">{{getCurrentDate()}}</h1>
     </div>
 
-    <form class="flex flex-row lg:container lg:mx-auto p-2 h-16" @submit.prevent="fetchSearchNews">
+    <form class="flex flex-row lg:container lg:mx-auto p-2 " @submit.prevent="fetchSearchNews">
       <input
         id="input"
-        class="w-64 h-10"
+        class="w-64 searchInput"
         type="text"
         v-model="searchTopic"
         placeholder=" Search.."
         name="search"
       />
-      <input class="h-10 px-2" type="submit" @click="fetchCurrentNews"  value="Search"/>
+      <!-- <input class="h-10 px-2 fas fa-search" type="submit" @click="fetchCurrentNews"  value=""/> -->
+      <div class="search-icons">
+        <i
+          class="fas fa-search text-2xl p-1 border-solid border-2 border-white"
+          @click="fetchSearchNews"
+        ></i>
+        <!-- <i class="fas fa-times" @click="fetchCurrentNews"></i> -->
+      </div>
+      <!-- <i v-if="isBusy" class="fas fa-spinner fa-spin"></i> -->
     </form>
+     </div>
 
     <div class="home flex flex-row justify-between xl:container xl:mx-auto mb-5 py-5">
-      <app-article :articles="articles"></app-article>
-      <app-moreNews></app-moreNews>
+      <app-article v-if="!Spinner" :articles="articles"></app-article>
+      <div class="mt-top center self-top h-10">
+        <i v-if="Spinner" class="fas fa-spinner fa-spin"></i>
+      </div>
+      <app-moreNews class="hidden md:block"></app-moreNews>
     </div>
   </div>
 </template>
@@ -28,6 +41,29 @@
 .home {
   //  background: linear-gradient(to bottom left, #cc0000 0%, #ffffff 107%);
 }
+
+.fa-spinner {
+  font-size: 40px;
+}
+
+.searchInput {
+  height: 2.2rem;
+}
+
+::placeholder {
+  color: black !important;
+  opacity: 0.7;
+}
+
+.SportHeader{
+    background-color: #FFD32F;
+    border-top: 1px solid white;
+}
+
+.dateHeading{
+  border-bottom: 1px solid black;
+  font-weight: 500;
+}
 </style>
 
 
@@ -36,7 +72,7 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 const axios = require("axios");
 const apiKey = "83921d95a9924c19badb5f8a2e6ed8c1";
-let newsCountry = 'gb'
+let newsCountry = "gb";
 
 export default {
   // name: 'Home',
@@ -47,6 +83,7 @@ export default {
     return {
       articles: [],
       searchTopic: "",
+      Spinner: false,
     };
 
     // currentDate: ''
@@ -54,7 +91,7 @@ export default {
   methods: {
     getCurrentDate() {
       // Get Current Day Name
-      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
       let dayName = days[new Date().getDay()];
       // Get Current Month Name
       const monthNames = [
@@ -82,38 +119,44 @@ export default {
     fetchSearchNews() {
       // alert(this.searchTopic);
 
-      if (this.searchTopic !== "") {
+      this.Spinner = true;
+
+      setTimeout(() => {
+        if (this.searchTopic !== "") {
+          axios
+            .get(
+              `https://newsapi.org/v2/everything?q=${this.searchTopic}&sortBy=publishedAt&language=en&pageSize=20&apiKey=83921d95a9924c19badb5f8a2e6ed8c1`
+            )
+            .then((response) => {
+              this.articles = response.data.articles;
+              console.log(response);
+              this.Spinner = false;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else {
+          this.fetchCurrentNews();
+        }
+      }, 600);
+    },
+    fetchCurrentNews() {
+      this.Spinner = true;
+      setTimeout(() => {
         axios
           .get(
-            `https://newsapi.org/v2/everything?q=${this.searchTopic}&sortBy=publishedAt&language=en&pageSize=20&apiKey=83921d95a9924c19badb5f8a2e6ed8c1`
+            `https://newsapi.org/v2/top-headlines?country=${newsCountry}&apiKey=${apiKey}`
           )
           .then((response) => {
             this.articles = response.data.articles;
-                        
-            if(response.data.articles == null){
-
-              return '../articles/default-image.jpg';
-            }
             console.log(response);
+            this.Spinner = false;
+            // alert("this is submit response");
           })
           .catch((error) => {
             console.log(error);
           });
-      }
-    },
-    fetchCurrentNews() {
-      axios
-        .get(
-          `https://newsapi.org/v2/top-headlines?country=${newsCountry}&apiKey=${apiKey}`
-        )
-        .then((response) => {
-          this.articles = response.data.articles;
-          console.log(response);
-          // alert("this is submit response");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      }, 600);
     },
   },
 
