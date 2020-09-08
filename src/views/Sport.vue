@@ -1,20 +1,44 @@
 <template>
   <div class="sport">
-    <!-- <div class="flex flex-row sm:container sm:mx-auto px-2"> -->
-
-    <div class="flex-auto text-center border-solid border-b-2 border-gray-600 border-opacity-50 SportHeader">
+    <div
+      class="flex-auto text-center border-solid border-b-2 border-gray-600 border-opacity-50 SportHeader"
+    >
       <div class="flex flex-row sm:container sm:mx-auto px-2">
-        <h1 class="px-4">Sport</h1>
+        <h1 class="px-4 sportHeading">{{Title}}</h1>
       </div>
       <div class="flex flex-row sm:container sm:mx-auto px-2 py-2">
-        <h2 class="px-4 cursor-pointer" @click="fetchFoodbal">Foodbal</h2>
-        <h2 class="px-4 cursor-pointer" @click="fetchFormula">Formula 1</h2>
-        <h2 class="px-4 cursor-pointer" @click="fetchRugby">Rugby</h2>
-        <h2 class="px-4 cursor-pointer" @click="fetchGolf">Golf</h2>
-        <h2 class="px-4 cursor-pointer" @click="fetchAthletics">Athletics</h2>
+        <h2
+          class="px-1 md:px-4 cursor-pointer subheading"
+          @click="fetchCurrentNews(1)"
+          :class="{selectedTab : currentTab == 1}"
+        >All</h2>
+        <h2
+          class="px-1 md:px-4 cursor-pointer subheading"
+          @click="fetchFootball(2)"
+          :class="{selectedTab : currentTab == 2}"
+        >Foodbal</h2>
+        <h2
+          class="px-1 md:px-4 cursor-pointer subheading"
+          @click="fetchFormula(3)"
+          :class="{selectedTab : currentTab == 3}"
+        >Formula 1</h2>
+        <h2
+          class="px-1 md:px-4 cursor-pointer subheading"
+          @click="fetchRugby(4)"
+          :class="{selectedTab : currentTab == 4}"
+        >Rugby</h2>
+        <h2
+          class="px-1 md:px-4 cursor-pointer subheading"
+          @click="fetchGolf(5)"
+          :class="{selectedTab : currentTab == 5}"
+        >Golf</h2>
+        <h2
+          class="px-1 md:px-4 cursor-pointer subheading"
+          @click="fetchAthletics(6)"
+          :class="{selectedTab : currentTab == 6}"
+        >Athletics</h2>
       </div>
     </div>
-    <!-- </div> -->
 
     <div class="home flex flex-row justify-between xl:container xl:mx-auto mb-5 py-5">
       <app-article v-if="!Spinner" :articles="articles"></app-article>
@@ -29,7 +53,6 @@
 
 <style lang="scss">
 .home {
-  //  background: linear-gradient(to bottom left, #cc0000 0%, #ffffff 107%);
 }
 
 .text-center {
@@ -42,13 +65,36 @@
 }
 
 .isActive {
-  // font-weight: bold;
   color: red;
 }
 
-.SportHeader{
-    background-color: #FFD32F;
-    border-top: 1px solid white;
+.subheading {
+  &:hover {
+    color: white;
+  }
+}
+
+.selectedTab {
+  font-weight: 500;
+  color: white;
+  border-bottom: 3px solid white;
+}
+
+.SportHeader {
+  background-color: #ffd32f;
+  border-top: 1px solid white;
+}
+
+@media only screen and (max-width: 600px) {
+  .subheading {
+    font-size: 15px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .sportHeading {
+    font-size: 28px !important;
+    padding-left: 0.2em;
+  }
 }
 </style>
 
@@ -66,12 +112,16 @@ export default {
       articles: [],
       sport: "",
       Spinner: false,
+      Title: "Sport",
+      currentTab: 1,
     };
 
     // currentDate: ''
   },
   methods: {
-    fetchCurrentNews() {
+    fetchCurrentNews(selectedTab) {
+      this.currentTab = selectedTab;
+      this.Title = "Sport";
       this.Spinner = true;
       setTimeout(() => {
         axios
@@ -90,8 +140,10 @@ export default {
       }, 1010);
     },
 
-    fetchFoodbal() {
+    fetchFootball(selectedTab) {
+      this.currentTab = selectedTab;
       this.Spinner = true;
+      this.Title = "Football";
       setTimeout(() => {
         axios
           .get(
@@ -108,8 +160,10 @@ export default {
           });
       }, 1010);
     },
-    fetchFormula() {
+    fetchFormula(selectedTab) {
+      this.currentTab = selectedTab;
       this.Spinner = true;
+      this.Title = "Formula 1";
       setTimeout(() => {
         axios
           .get(
@@ -125,8 +179,10 @@ export default {
           });
       }, 1010);
     },
-    fetchRugby() {
+    fetchRugby(selectedTab) {
+      this.currentTab = selectedTab;
       this.Spinner = true;
+      this.Title = "Rugby";
       setTimeout(() => {
         axios
           .get(
@@ -142,8 +198,10 @@ export default {
           });
       }, 1010);
     },
-    fetchGolf() {
+    fetchGolf(selectedTab) {
+      this.currentTab = selectedTab;
       this.Spinner = true;
+      this.Title = "Golf";
       setTimeout(() => {
         axios
           .get(
@@ -159,8 +217,10 @@ export default {
           });
       }, 1010);
     },
-    fetchAthletics() {
+    fetchAthletics(selectedTab) {
+      this.currentTab = selectedTab;
       this.Spinner = true;
+      this.Title = "Athletics";
       setTimeout(() => {
         axios
           .get(
@@ -169,7 +229,7 @@ export default {
           .then((response) => {
             this.articles = response.data.articles;
             console.log(response);
-            this.Spinner = false
+            this.Spinner = false;
           })
           .catch((error) => {
             console.log(error);

@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-// import Axios from 'axios';
 import './assets/css/tailwind.css'
 import VueProgressiveImage from 'vue-progressive-image'
+import VueLazyload from 'vue-lazyload'
+
 
 
 // Global Componets
@@ -17,27 +18,23 @@ Vue.component('app-article', Article);
 Vue.component('app-moreNews', MoreNews);
 Vue.component('app-mostPopularArticle', MostPopularArticle);
 
-Vue.use(VueProgressiveImage,{
+Vue.use(VueProgressiveImage, {
   blur: 100,
-  // delay: 1000,
-  // cache: false,
   placeholder: require('@/assets/images/no-image-found.png')
 })
 
+Vue.use(VueLazyload)
 Vue.config.productionTip = false
-// Vue.prototype.$http=Axios;
 
 
 
 // Global Filters
-
-Vue.filter('truncate', function(value, limit){
+Vue.filter('truncate', function (value, limit) {
   if (value.length > limit) {
     value = value.substring(0, limit - 3) + "...";
   }
   return value;
 });
-
 // End Global Filters
 
 

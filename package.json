@@ -13,6 +13,7 @@
     "newsapi": "^2.4.1",
     "tailwindcss": "^1.6.0",
     "vue": "^2.6.11",
+    "vue-lazyload": "^1.3.3",
     "vue-progressive-image": "^3.2.0",
     "vue-router": "^3.2.0"
   },

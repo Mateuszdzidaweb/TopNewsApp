@@ -1,48 +1,40 @@
 <template>
-  <div class="flex flex-row flex-wrap w-full h-auto" :class="{'noResults': articles.length === 0}">
-    <!-- <p>{{searchTopic}}</p> -->
-    <!-- 
-    <form class="flex flex-row lg:container lg:mx-auto p-2 h-16"
-    @submit.prevent="fetchSearchNews">
-      <input
-        id="input"
-        class = "w-64 h-10"
-        type="text"
-        v-model="searchTopic"
-        placeholder=" Search.."
-        name="search"
-      />
-      <input class="h-10 px-2"
-       type="submit" @click="fetchCurrentNews"/>
-    </form>
-    -->
-    <h1 class="mt-top center self-top h-10" v-if="articles.length === 0 && visible">No results found</h1>
+  <div>
     <div
-      class=" container flex flex-row items-center ml-2 mr-2"
-      :key="article.id"
-      v-for="article in articles.slice(0, articlesToShow)"
+      class="flex flex-row flex-wrap w-full h-auto"
+      :class="{'noResults': articles.length === 0}"
     >
-      <a :href="article.url" target="_blank">
-        <div>
-          <progressive-img
-            class="flex flex-row content-center cursor-pointer imageSize"
-            :src="article.urlToImage || defaultImage"
-            :blur="100"
-            alt
-          />
-          <h2 class="flex text-center cursor-pointer mt-top py-4">{{ article.title| truncate(70) }}</h2>
-        </div>
-      </a>
+      <h1
+        class="mt-top center self-top h-10"
+        v-if="articles.length === 0 && visible"
+      >No results found</h1>
+      <div
+        class="container md:flex flex-col items-center ml-2 mr-2"
+        :key="article.id"
+        v-for="article in articles.slice(0, articlesToShow)"
+      >
+        <a :href="article.url" target="_blank">
+          <div class="articleContainer">
+            <img
+              class="flex flex-row content-center cursor-pointer imageSize"
+              v-lazy="article.urlToImage || defaultImage"
+              :blur="100"
+              alt
+            />
+            <h2
+              class="flex text-center cursor-pointer mt-top py-4 articleHeading"
+            >{{ article.title| truncate(70) }}</h2>
+          </div>
+        </a>
+      </div>
+
+      <i v-if="isBusy" class="fas fa-spinner fa-spin"></i>
     </div>
-
-     <i v-if="isBusy" class="fas fa-spinner fa-spin"></i>
-
     <button
       @click="articlesToShow += 3"
       :class="{'hide': articlesToShow >= articles.length }"
-      class="flex center items-center h-4"
+      class="mt-2 center items-center"
     >Load More</button>
-  
   </div>
 </template>
 
@@ -76,50 +68,81 @@ h2 {
 }
 
 .imageSize {
-  max-height: 200px;
-  min-height: 180px;
+  max-width: 300px;
+  min-height: 200px;
+  max-height: 220px;
+  min-width: 300px;
 }
 
+button {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+  &:focus {
+    box-shadow: none;
+    outline: none;
+  }
+}
 
 @media only screen and (max-width: 600px) {
-   .container{
-  max-width: 100%;
-
+  .container {
+    max-width: 100%;
+    border-bottom: 1px solid gray;
   }
 
-  .progressive-image-main{
-    position: relative;
+  .articleContainer {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .imageSize {
+    max-width: 180px;
+    min-height: 100px;
+    max-height: 130px;
+    min-width: 180px;
+  }
+  .articleHeading {
+    font-size: 13px;
+    text-align: start !important;
+    padding-left: 10px;
+  }
+  .progressive-image-wrapper {
+    padding-bottom: 0px !important;
+  }
+  .progressive-image-main {
+    width: 180px;
+    height: 100px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    button {
+      display: none !important;
+    }
+
+    .container {
+      background-color: red;
+    }
   }
 }
-
 </style>
 
 <script>
-// const axios = require("axios");
-
-// const apiKey = '83921d95a9924c19badb5f8a2e6ed8c1';
-// let pageSize = 50;
-
-// const input = document.getElementById('input');
-// let searchTopic = this.searchTopic;
-
 export default {
   props: {
     articles: {},
-
   },
 
   data() {
     return {
-      // articles: [],
       articlesToShow: 9,
       searchTopic: "",
       visible: false,
       defaultImage: require("@/assets/images/no-image-found.png"),
-      isBusy: false
+      isBusy: false,
+      mobile: window.innerWidth <= 700,
     };
   },
-  // ../articles/default-image.jpg
   methods: {},
   mounted() {
     setTimeout(() => {

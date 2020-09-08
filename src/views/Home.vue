@@ -1,30 +1,30 @@
 <template>
   <div class="home">
-     <div class="flex-auto text-center border-solid border-b-2 border-gray-600 border-opacity-50 SportHeader">
-    <div class="flex flex-row lg:container lg:mx-auto py-3 px-2">
-      <h1 class="dateHeading">{{getCurrentDate()}}</h1>
-    </div>
-
-    <form class="flex flex-row lg:container lg:mx-auto p-2 " @submit.prevent="fetchSearchNews">
-      <input
-        id="input"
-        class="w-64 searchInput"
-        type="text"
-        v-model="searchTopic"
-        placeholder=" Search.."
-        name="search"
-      />
-      <!-- <input class="h-10 px-2 fas fa-search" type="submit" @click="fetchCurrentNews"  value=""/> -->
-      <div class="search-icons">
-        <i
-          class="fas fa-search text-2xl p-1 border-solid border-2 border-white"
-          @click="fetchSearchNews"
-        ></i>
-        <!-- <i class="fas fa-times" @click="fetchCurrentNews"></i> -->
+    <div
+      class="sticky md:flex-auto text-center border-solid border-b-2 border-gray-600 border-opacity-50 SportHeader"
+    >
+      <div class="hidden md:flex flex-row lg:container lg:mx-auto py-3 px-2">
+        <h1 class="dateHeading">{{getCurrentDate()}}</h1>
       </div>
-      <!-- <i v-if="isBusy" class="fas fa-spinner fa-spin"></i> -->
-    </form>
-     </div>
+
+      <form class="flex flex-row lg:container lg:mx-auto p-2" @submit.prevent="fetchSearchNews">
+        <input
+          id="input"
+          class="w-64 searchInput"
+          type="text"
+          v-model="searchTopic"
+          placeholder=" Search.."
+          name="search"
+        />
+
+        <div class="search-icons">
+          <i
+            class="fas fa-search text-2xl p-1 border-solid border-2 border-white"
+            @click="fetchSearchNews"
+          ></i>
+        </div>
+      </form>
+    </div>
 
     <div class="home flex flex-row justify-between xl:container xl:mx-auto mb-5 py-5">
       <app-article v-if="!Spinner" :articles="articles"></app-article>
@@ -39,7 +39,6 @@
 
 <style lang="scss">
 .home {
-  //  background: linear-gradient(to bottom left, #cc0000 0%, #ffffff 107%);
 }
 
 .fa-spinner {
@@ -55,14 +54,34 @@
   opacity: 0.7;
 }
 
-.SportHeader{
-    background-color: #FFD32F;
-    border-top: 1px solid white;
+.SportHeader {
+  background-color: #ffd32f;
+  border-top: 1px solid white;
 }
 
-.dateHeading{
+.dateHeading {
   border-bottom: 1px solid black;
   font-weight: 500;
+}
+
+@media only screen and (max-width: 600px) {
+  .searchInput {
+    width: 100% !important;
+    padding: 5px;
+  }
+
+  .home {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+  }
+  .fa-spinner {
+    font-size: 40px;
+    margin-top: 20px;
+  }
+  .sticky {
+    top: 0;
+    z-index: 9;
+  }
 }
 </style>
 
@@ -75,23 +94,25 @@ const apiKey = "83921d95a9924c19badb5f8a2e6ed8c1";
 let newsCountry = "gb";
 
 export default {
-  // name: 'Home',
-  // components: {
-  //   HelloWorld
-  // }
   data() {
     return {
       articles: [],
       searchTopic: "",
       Spinner: false,
     };
-
-    // currentDate: ''
   },
   methods: {
     getCurrentDate() {
       // Get Current Day Name
-      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
       let dayName = days[new Date().getDay()];
       // Get Current Month Name
       const monthNames = [
@@ -117,8 +138,6 @@ export default {
       return "Today: " + dayName + ", " + day + " " + monthDay;
     },
     fetchSearchNews() {
-      // alert(this.searchTopic);
-
       this.Spinner = true;
 
       setTimeout(() => {
@@ -151,7 +170,6 @@ export default {
             this.articles = response.data.articles;
             console.log(response);
             this.Spinner = false;
-            // alert("this is submit response");
           })
           .catch((error) => {
             console.log(error);
