@@ -144,7 +144,7 @@ export default {
         if (this.searchTopic !== "") {
           axios
             .get(
-              `https://newsapi.org/v2/everything?q=${this.searchTopic}&sortBy=publishedAt&language=en&pageSize=20&apiKey=83921d95a9924c19badb5f8a2e6ed8c1`
+              `https://newsapi.org/v2/everything?q=${this.searchTopic}&sortBy=publishedAt&language=en&pageSize=20&apiKey=${this.apiKey}`
             )
             .then((response) => {
               this.articles = response.data.articles;
