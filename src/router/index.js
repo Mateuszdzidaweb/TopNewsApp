@@ -23,7 +23,14 @@ Vue.use(VueRouter)
     path: '/business',
     name: 'Business',
     component: () => import(/* webpackChunkName: "business" */ '../views/Business.vue')
+  },
+
+  {
+    path: '*',
+    name: 'notFound',
+    component: () => import(/* webpackChunkName: "notFound" */ '../views/notFound.vue')
   }
+
 ]
 
 const router = new VueRouter({
