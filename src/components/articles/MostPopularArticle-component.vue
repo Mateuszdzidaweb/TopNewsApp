@@ -10,7 +10,7 @@
         <a class="display flex" :href="article.url" target="_blank">
           <progressive-img
             class="topNewsImg flex content-center"
-            :src="article.urlToImage || defaultImage"
+            :src="article.image || defaultImage"
             :alt="articles.name"
           />
           <p class="article-title mx-2">{{ article.title| truncate(50) }}</p>
@@ -38,8 +38,8 @@
 
 <script>
 const axios = require("axios");
-const apiKey = "83921d95a9924c19badb5f8a2e6ed8c1";
-let number = 9;
+const apiKey = "77ef20c213b11a5bd4c4e1491a0c7043";
+let newsCountry = "gb";
 
 export default {
   data() {
@@ -52,7 +52,7 @@ export default {
   created() {
     axios
       .get(
-        `https://newsapi.org/v2/top-headlines?sources=bbc-news&pageSize=${number}&apiKey=${apiKey}`
+         `https://gnews.io/api/v3/search?q=health&country=${newsCountry}&lang=en&max=9&token=${apiKey}`
       )
       .then((response) => {
         this.articles = response.data.articles;

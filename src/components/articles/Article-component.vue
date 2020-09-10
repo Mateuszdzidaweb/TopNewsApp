@@ -17,7 +17,7 @@
           <div class="articleContainer">
             <img
               class="flex flex-row content-center cursor-pointer imageSize"
-              v-lazy="article.urlToImage || defaultImage"
+              v-lazy="article.image || defaultImage"
               :blur="100"
               alt
             />

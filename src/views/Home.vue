@@ -90,7 +90,8 @@
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 const axios = require("axios");
-const apiKey = "83921d95a9924c19badb5f8a2e6ed8c1";
+const apiKey = "77ef20c213b11a5bd4c4e1491a0c7043";
+
 let newsCountry = "gb";
 
 export default {
@@ -144,7 +145,7 @@ export default {
         if (this.searchTopic !== "") {
           axios
             .get(
-              `https://newsapi.org/v2/everything?q=${this.searchTopic}&sortBy=publishedAt&language=en&pageSize=20&apiKey=${apiKey}`
+              `https://gnews.io/api/v3/search?q=${this.searchTopic}&country=${newsCountry}&token=${apiKey}`
             )
             .then((response) => {
               this.articles = response.data.articles;
@@ -164,7 +165,7 @@ export default {
       setTimeout(() => {
         axios
           .get(
-            `https://newsapi.org/v2/top-headlines?country=${newsCountry}&apiKey=${apiKey}`
+            `https://gnews.io/api/v3/search?q=world&country=${newsCountry}&lang=en&token=${apiKey}`
           )
           .then((response) => {
             this.articles = response.data.articles;
