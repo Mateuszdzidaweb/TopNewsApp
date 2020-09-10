@@ -82,6 +82,9 @@
     top: 0;
     z-index: 9;
   }
+  .fa-search{
+    padding-left: 1px;
+  }
 }
 </style>
 
