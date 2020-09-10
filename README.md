@@ -1,4 +1,4 @@
-# travel-app
+# TopNews
 
 ## Project setup
 ```
